@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArtistryApp.Views.ClassStudentPage"
+             Title="Class Students">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20"
+                             Spacing="12">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="6"
+                                 Margin="0,15,0,5">
+
+                <Label Text="Class Students"
+                       FontSize="27"
+                       FontAttributes="Bold"
+                       TextColor="#33215E"/>
+
+                <Label x:Name="ClassNameLabel"
+                       FontSize="15"
+                       TextColor="#7045C5"/>
+
+            </VerticalStackLayout>
+
+            <!-- Student Count -->
+            <Border BackgroundColor="#EEE7FF"
+                    StrokeThickness="0"
+                    Padding="14"
+                    StrokeShape="RoundRectangle 12">
+
+                <Grid ColumnDefinitions="*,Auto">
+
+                    <Label Text="Registered Students"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#49327C"/>
+
+                    <Label x:Name="StudentCountLabel"
+                           Grid.Column="1"
+                           Text="0 Students"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#7045C5"/>
+
+                </Grid>
+
+            </Border>
+
+            <!-- Add Existing Student -->
+            <Border BackgroundColor="#F8F5FF"
+                    Stroke="#EAE5F2"
+                    StrokeThickness="1"
+                    Padding="14"
+                    StrokeShape="RoundRectangle 12">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label Text="Add Existing Student"
+                           FontSize="17"
+                           FontAttributes="Bold"
+                           TextColor="#33215E"/>
+
+                    <Picker x:Name="AvailableStudentsPicker"
+                            Title="Select Student"
+                            ItemDisplayBinding="{Binding StudentName}"
+                            TextColor="#33215E"
+                            BackgroundColor="White"
+                            TitleColor="#999999"/>
+
+                    <Button x:Name="AddStudentButton"
+                            Text="+ Add Student"
+                            BackgroundColor="#7045C5"
+                            TextColor="White"
+                            CornerRadius="10"
+                            HeightRequest="45"
+                            Clicked="AddStudent_Clicked"/>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- Create New Student -->
+            <Border BackgroundColor="#F8F5FF"
+                    Stroke="#EAE5F2"
+                    StrokeThickness="1"
+                    Padding="14"
+                    StrokeShape="RoundRectangle 12">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label Text="Create New Student"
+                           FontSize="17"
+                           FontAttributes="Bold"
+                           TextColor="#33215E"/>
+
+                    <!-- First Name -->
+                    <Entry x:Name="FirstNameEntry"
+                           Placeholder="First Name *"
+                           MaxLength="100"
+                           TextColor="#33215E"
+                           PlaceholderColor="#999999"/>
+
+                    <!-- Middle Name -->
+                    <Entry x:Name="MiddleNameEntry"
+                           Placeholder="Middle Name (Optional)"
+                           MaxLength="100"
+                           TextColor="#33215E"
+                           PlaceholderColor="#999999"/>
+
+                    <!-- Last Name -->
+                    <Entry x:Name="LastNameEntry"
+                           Placeholder="Last Name *"
+                           MaxLength="100"
+                           TextColor="#33215E"
+                           PlaceholderColor="#999999"/>
+
+                    <!-- Phone Number -->
+                    <Entry x:Name="PhoneNumberEntry"
+                           Placeholder="Phone Number"
+                           Keyboard="Telephone"
+                           MaxLength="20"
+                           TextColor="#33215E"
+                           PlaceholderColor="#999999"/>
+
+                    <!-- Email -->
+                    <Entry x:Name="EmailEntry"
+                           Placeholder="Email Address"
+                           Keyboard="Email"
+                           MaxLength="150"
+                           TextColor="#33215E"
+                           PlaceholderColor="#999999"/>
+
+                    <!-- Comments -->
+                    <Editor x:Name="CommentsEditor"
+                            Placeholder="Comments (Optional)"
+                            AutoSize="TextChanges"
+                            HeightRequest="75"
+                            TextColor="#33215E"
+                            PlaceholderColor="#999999"/>
+
+                    <!-- Create Button -->
+                    <Button x:Name="CreateStudentButton"
+                            Text="+ Create New Student"
+                            BackgroundColor="#33215E"
+                            TextColor="White"
+                            CornerRadius="10"
+                            HeightRequest="45"
+                            Clicked="CreateStudent_Clicked"/>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- Student List Header -->
+            <Label Text="Student List"
+                   FontSize="19"
+                   FontAttributes="Bold"
+                   TextColor="#33215E"
+                   Margin="0,5,0,0"/>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator
+                x:Name="LoadingIndicator"
+                IsRunning="False"
+                IsVisible="False"
+                Color="#7045C5"
+                HorizontalOptions="Center"/>
+
+            <!-- Empty Message -->
+            <Label
+                x:Name="EmptyMessage"
+                Text="No students registered for this class."
+                FontSize="14"
+                TextColor="#999999"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                IsVisible="False"
+                Margin="0,15"/>
+
+            <!-- Student List -->
+            <CollectionView
+                x:Name="StudentCollection"
+                SelectionMode="None"
+                HeightRequest="350">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border
+                            BackgroundColor="White"
+                            Stroke="#EAE5F2"
+                            StrokeThickness="1"
+                            Padding="14"
+                            Margin="0,5"
+                            StrokeShape="RoundRectangle 12">
+
+                            <Grid ColumnDefinitions="*,Auto"
+                                  VerticalOptions="Center">
+
+                                <VerticalStackLayout
+                                    Grid.Column="0"
+                                    Spacing="5"
+                                    VerticalOptions="Center">
+
+                                    <Label
+                                        Text="{Binding StudentName}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        TextColor="#33215E"/>
+
+                                    <Label
+                                        Text="{Binding StudentId, StringFormat='Student ID: {0}'}"
+                                        FontSize="12"
+                                        TextColor="#999999"/>
+
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Spacing="5"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+
+                                    <CheckBox
+                                        IsChecked="{Binding Attendance, Mode=TwoWay}"
+                                        CheckedChanged="Attendance_CheckedChanged"
+                                        Loaded="AttendanceCheckBox_Loaded"
+                                        Color="#7045C5"
+                                        VerticalOptions="Center"/>
+
+                                    <Label
+                                        Text="Present"
+                                        FontSize="11"
+                                        TextColor="#7045C5"
+                                        HorizontalOptions="Center"/>
+
+                                </VerticalStackLayout>
+
+                            </Grid>
+
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
